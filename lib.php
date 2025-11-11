@@ -2027,7 +2027,6 @@ function facetoface_user_signup(
     $statuscode,
     $userid = false,
     $notifyuser = true,
-    $timenow = null,
 ) {
 
     global $CFG, $DB;
@@ -2038,9 +2037,7 @@ function facetoface_user_signup(
         $userid = $USER->id;
     }
 
-    if (empty($timenow)) {
-        $timenow = time();
-    }
+    $timenow = time();
 
     // Check to see if a signup already exists.
     if ($existingsignup = $DB->get_record('facetoface_signups', ['sessionid' => $session->id, 'userid' => $userid])) {
