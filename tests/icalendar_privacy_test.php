@@ -71,7 +71,9 @@ final class icalendar_privacy_test extends \advanced_testcase {
         $this->assertStringNotContainsString('CLASS:PUBLIC', $icalcontent);
 
         // Clean up temp file.
-        @unlink($icalfile);
+        if (file_exists($icalfile)) {
+            unlink($icalfile);
+        }
     }
 
     /**
@@ -115,7 +117,9 @@ final class icalendar_privacy_test extends \advanced_testcase {
         $this->assertStringNotContainsString('CLASS:PRIVATE', $icalcontent);
 
         // Clean up temp file.
-        @unlink($icalfile);
+        if (file_exists($icalfile)) {
+            unlink($icalfile);
+        }
     }
 
     /**
@@ -163,6 +167,8 @@ final class icalendar_privacy_test extends \advanced_testcase {
         $this->assertStringContainsString('CLASS:PUBLIC', $icalcontent);
 
         // Clean up temp file.
-        @unlink($icalfile);
+        if (file_exists($icalfile)) {
+            unlink($icalfile);
+        }
     }
 }
