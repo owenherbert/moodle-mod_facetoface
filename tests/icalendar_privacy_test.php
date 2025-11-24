@@ -121,16 +121,17 @@ final class icalendar_privacy_test extends \advanced_testcase {
     }
 
     /**
-     * Test default behavior (should be private when not explicitly set).
+     * Test behavior when config is not set.
+     * 
+     * Note: The default value in settings.php (1) only applies when the plugin is installed
+     * or when an admin saves the settings. In a test environment where the config has never
+     * been set, get_config returns false, which results in PUBLIC behavior.
      */
-    public function test_icalendar_private_flag_default(): void {
+    public function test_icalendar_private_flag_when_unset(): void {
         global $CFG;
         $this->resetAfterTest();
 
-        // Don't set any config, test default behavior.
-        // The default in settings.php is 1 (enabled), but if not set at all, get_config returns false.
-        // So we need to test what happens when it's explicitly null/unset.
-        // We'll unset it to test the actual default behavior.
+        // Explicitly unset the config to test behavior when not configured.
         unset_config('icalendarprivate', 'facetoface');
 
         /** @var \mod_facetoface_generator $generator */
@@ -161,7 +162,7 @@ final class icalendar_privacy_test extends \advanced_testcase {
         $icalcontent = file_get_contents($icalfile);
 
         // When config is not set, get_config returns false, which evaluates to false in the ternary.
-        // So it should be PUBLIC.
+        // Therefore it should be PUBLIC.
         $this->assertStringContainsString('CLASS:PUBLIC', $icalcontent);
 
         // Clean up temp file.

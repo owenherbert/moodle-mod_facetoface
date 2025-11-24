@@ -27,9 +27,11 @@ vendor/bin/phpunit mod/facetoface/tests/icalendar_privacy_test.php
 
 ### Expected Test Results
 All three test methods should pass:
-- `test_icalendar_private_flag_enabled()` - Verifies CLASS:PRIVATE when setting is ON
-- `test_icalendar_private_flag_disabled()` - Verifies CLASS:PUBLIC when setting is OFF
-- `test_icalendar_private_flag_default()` - Verifies default behavior (PUBLIC) when not set
+- `test_icalendar_private_flag_enabled()` - Verifies CLASS:PRIVATE when setting is ON (1)
+- `test_icalendar_private_flag_disabled()` - Verifies CLASS:PUBLIC when setting is OFF (0)
+- `test_icalendar_private_flag_when_unset()` - Verifies PUBLIC behavior when config is not set
+
+**Note:** The default value in settings.php (1 = enabled) only applies when the plugin is first installed or when an administrator saves the settings page. In a test environment where the config has never been set, `get_config()` returns `false`, resulting in PUBLIC behavior.
 
 ## Manual Testing
 
@@ -40,7 +42,8 @@ All three test methods should pass:
 4. Locate the new setting: **Private calendar invitations**
 
 ### Step 2: Test with Private Flag Enabled (Default)
-1. Ensure the **Private calendar invitations** checkbox is **checked** (default state)
+1. Ensure the **Private calendar invitations** checkbox is **checked** 
+   - **Note:** The default value is enabled (1) in settings.php, which will be applied when you first save the settings page after installation
 2. Click **Save changes**
 3. Create a test course (or use an existing one)
 4. Add a **Face-to-Face** activity to the course
@@ -170,8 +173,8 @@ php local/codechecker/cli/run.php --path=mod/facetoface
 ## Known Limitations
 - The setting only affects newly generated iCalendar attachments
 - Existing calendar events will retain their original privacy setting
-- The default setting is "enabled" (CLASS:PRIVATE) for privacy by default
-- If the setting has never been configured, it will default to PUBLIC (when get_config returns false)
+- The default setting in settings.php is "enabled" (value: 1) which applies PRIVATE by default when an admin first saves the settings
+- In fresh installations where the setting has never been saved, `get_config()` returns `false`, resulting in PUBLIC behavior until the settings page is saved
 
 ## Troubleshooting
 
