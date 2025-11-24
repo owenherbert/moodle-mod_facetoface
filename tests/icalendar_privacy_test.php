@@ -34,7 +34,6 @@ final class icalendar_privacy_test extends \advanced_testcase {
      * Test that calendar invitations respect the private setting when enabled.
      */
     public function test_icalendar_private_flag_enabled(): void {
-        global $CFG;
         $this->resetAfterTest();
 
         // Enable private calendar invitations.
@@ -79,7 +78,6 @@ final class icalendar_privacy_test extends \advanced_testcase {
      * Test that calendar invitations respect the private setting when disabled.
      */
     public function test_icalendar_private_flag_disabled(): void {
-        global $CFG;
         $this->resetAfterTest();
 
         // Disable private calendar invitations.
@@ -128,7 +126,6 @@ final class icalendar_privacy_test extends \advanced_testcase {
      * been set, get_config returns false, which results in PUBLIC behavior.
      */
     public function test_icalendar_private_flag_when_unset(): void {
-        global $CFG;
         $this->resetAfterTest();
 
         // Explicitly unset the config to test behavior when not configured.
